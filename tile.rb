@@ -87,5 +87,4 @@ class Tile
 
   private
   attr_reader :board, :bomb, :flagged
-  attr_accessor :revealed
 end

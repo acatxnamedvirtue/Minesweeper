@@ -2,15 +2,14 @@ require 'colorize'
 
 class Tile
   COLORS = {
-    1 => :light_green,
+    1 => :red
     2 => :green,
-    3 => :blue,
-    4 => :cyan,
-    5 => :yellow,
-    6 => :light_magenta,
-    7 => :magenta,
+    3 => :yellow,
+    4 => :blue,
+    5 => :magenta,
+    6 => :cyan,
+    7 => :light_green,
     8 => :light_red,
-    9 => :red
   }
 
   NEIGHBOR_OFFSETS = [
@@ -18,7 +17,7 @@ class Tile
     [+0, -1],
     [+1, -1],
     [-1, +0],
-    [-1, +0],
+    [+1, +0],
     [-1, +1],
     [+0, +1],
     [+1, +1]

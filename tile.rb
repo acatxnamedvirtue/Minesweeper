@@ -20,6 +20,13 @@ class Tile
     @revealed = false
   end
 
+  def inspect
+    { pos: @pos,
+      bomb: @bomb,
+      flagged: @flagged,
+      revealed: @revealed }
+  end
+
   def bomb?
     bomb
   end

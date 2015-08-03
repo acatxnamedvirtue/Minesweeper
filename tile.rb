@@ -1,5 +1,7 @@
 class Tile
-  def initialize
+  def initialize(board, pos)
+    @board = board
+    @pos = pos
     @bomb = false
     @flagged = false
     @revealed = false

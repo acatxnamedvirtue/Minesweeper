@@ -33,12 +33,24 @@ class Board
     end
   end
 
+  def bomb_tiles
+    grid.flatten.select(&:bomb?)
+  end
+
   def empty_tiles
     grid.flatten.reject(&:bomb?)
   end
 
   def flag_tile(pos)
     self[pos].flagged = (self[pos].flagged? ? false : true)
+  end
+
+  def won?
+    bomb_tiles.all?(&:flagged?) && empty_tiles.all?(&:revealed?)
+  end
+
+  def over?
+    won? || bomb_tiles.any?(&:revealed?)
   end
 
   def rows

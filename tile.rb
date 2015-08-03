@@ -64,6 +64,12 @@ class Tile
 
   def reveal
     @revealed = true
+
+    if neighbor_bomb_count == 0 && !bomb?
+      neighbors.each do |neighbor|
+        neighbor.reveal unless neighbor.revealed?
+      end
+    end
   end
 
   def bomb?

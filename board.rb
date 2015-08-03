@@ -53,6 +53,10 @@ class Board
     self[pos].reveal
   end
 
+  def reveal_all
+    grid.flatten.each(&:reveal)
+  end
+
   def won?
     bomb_tiles.all?(&:flagged?) && empty_tiles.all?(&:revealed?)
   end

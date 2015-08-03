@@ -47,6 +47,7 @@ class Game
   end
 
   def end_game
+    board.reveal_all
     board.render
 
     if board.won?

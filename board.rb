@@ -37,6 +37,10 @@ class Board
     grid.flatten.reject(&:bomb?)
   end
 
+  def flag_tile(pos)
+    self[pos].flagged = (self[pos].flagged? ? false : true)
+  end
+
   def rows
     grid
   end

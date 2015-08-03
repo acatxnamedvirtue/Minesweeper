@@ -49,8 +49,8 @@ class Tile
 
     NEIGHBOR_OFFSETS.each do |offset|
       o_x, o_y = offset
-      neighbor_pos = o_x + p_x, o_y + p_y
-      neighbors << board[] if board.in_range?(neighbor_pos)
+      neighbor_pos = [o_x + p_x, o_y + p_y]
+      neighbors << board[neighbor_pos] if board.in_range?(neighbor_pos)
     end
 
     neighbors

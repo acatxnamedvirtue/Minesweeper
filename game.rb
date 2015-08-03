@@ -2,8 +2,27 @@ require_relative 'board'
 require_relative 'tile'
 
 class Game
-  def initialize
-    @board = Board.new
+  DIFFICULTY_LEVELS = {
+    e: { height: 8,
+         width: 8,
+         num_bombs: 10 },
+    m: { height: 16,
+         width: 16,
+         num_bombs: 40 },
+    h: { height: 24,
+         width: 24,
+         num_bombs: 99 }
+  }
+
+  def self.from_difficulty(difficulty)
+    d = DIFFICULTY_LEVELS[difficulty]
+    height, width, num_bombs = d[:height], d[:width], d[:num_bombs]
+
+    Game.new(height, width, num_bombs)
+  end
+
+  def initialize(height, width, num_bombs)
+    @board = Board.new(height, width, num_bombs)
   end
 
   def run
@@ -80,6 +99,26 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
-  game = Game.new
+  puts "Please enter a difficulty: (E)asy, (M)edium, (H)ard, (C)ustom."
+  difficulty = gets.chomp[0].downcase.to_sym
+
+  if [:e, :m, :h].include?(difficulty)
+    game = Game.from_difficulty(difficulty)
+  elsif difficulty == :c
+    puts "Please enter a height: "
+    print ">"
+    height = gets.chomp.to_i
+
+    puts "Please enter a width: "
+    print ">"
+    width = gets.chomp.to_i
+
+    puts "Please enter the number of bombs: "
+    print ">"
+    num_bombs = gets.chomp.to_i
+
+    game = Game.new(height, width, num_bombs)
+  end
+
   game.run
 end

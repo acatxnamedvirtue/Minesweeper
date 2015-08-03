@@ -2,8 +2,8 @@ require 'byebug'
 require_relative 'tile'
 
 class Board
-  def initialize(width = 9, height = 9, num_bombs = 10)
-    @grid = Array.new(width) { Array.new(height) }
+  def initialize(height = 9, width = 9, num_bombs = 10)
+    @grid = Array.new(height) { Array.new(width) }
     @num_bombs = num_bombs
   end
 

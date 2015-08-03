@@ -17,4 +17,11 @@ class Tile
     @flagged = false
     @revealed = false
   end
+
+  def reveal
+    revealed = true
+  end
+
+  private
+  attr_accessor :revealed
 end

@@ -2,8 +2,9 @@ require 'byebug'
 require_relative 'tile'
 
 class Board
-  def initialize(width = 9, height = 9)
+  def initialize(width = 9, height = 9, num_bombs = 10)
     @grid = Array.new(width) { Array.new(height) }
+    @num_bombs = num_bombs
   end
 
   def [](pos)
@@ -25,6 +26,17 @@ class Board
     end
   end
 
+  def add_bombs
+    num_bombs.times do
+      pos = empty_tiles.sample.pos
+      self[pos].bomb = true
+    end
+  end
+
+  def empty_tiles
+    grid.flatten.reject(&:bomb?)
+  end
+
   def rows
     grid
   end
@@ -41,5 +53,5 @@ class Board
   end
 
   private
-  attr_reader :grid
+  attr_reader :grid, :num_bombs
 end

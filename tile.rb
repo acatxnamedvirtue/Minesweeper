@@ -10,6 +10,7 @@ class Tile
     [+1, +1]
 ]
 
+  attr_reader :pos
   attr_writer :bomb, :flagged
 
   def initialize(board, pos)
@@ -61,6 +62,6 @@ class Tile
   end
 
   private
-  attr_reader :board, :pos, :bomb, :flagged
+  attr_reader :board, :bomb, :flagged
   attr_accessor :revealed
 end

@@ -27,13 +27,13 @@ class Board
   end
 
   def render
-    rows.map { |row| row.map(&:to_s).join }
+    puts rows.map { |row| row.map(&:to_s).join }
   end
 
   def add_bombs
     num_bombs.times do
       pos = empty_tiles.sample.pos
-      self[pos].bomb = true
+      self[pos].set_bomb
     end
   end
 
@@ -46,11 +46,11 @@ class Board
   end
 
   def flag_tile(pos)
-    self[pos].flagged = (self[pos].flagged? ? false : true)
+    self[pos].toggle_flag
   end
 
   def reveal_tile(pos)
-    self[pos].revealed = true
+    self[pos].reveal
   end
 
   def won?

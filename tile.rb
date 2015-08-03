@@ -25,7 +25,7 @@ class Tile
 ]
 
   attr_reader :pos
-  attr_writer :bomb, :flagged
+  attr_writer :bomb
   attr_accessor :revealed
 
   def initialize(board, pos)
@@ -40,7 +40,7 @@ class Tile
     { pos: @pos,
       bomb: @bomb,
       flagged: @flagged,
-      revealed: @revealed }
+      revealed: @revealed }.inspect
   end
 
   def to_s
@@ -49,23 +49,34 @@ class Tile
     return "B" if bomb?
 
     case neighbor_bomb_count
-    when 0
-      "_"
+    when 0 then "_"
     else
       neighbor_bomb_count.to_s.colorize(COLORS[neighbor_bomb_count])
     end
   end
 
+  def set_bomb
+    @bomb = true
+  end
+
+  def toggle_flag
+    @flagged = !flagged?
+  end
+
+  def reveal
+    @revealed = true
+  end
+
   def bomb?
-    bomb
+    @bomb
   end
 
   def flagged?
-    flagged
+    @flagged
   end
 
   def revealed?
-    revealed
+    @revealed
   end
 
   def neighbors
@@ -86,5 +97,5 @@ class Tile
   end
 
   private
-  attr_reader :board, :bomb, :flagged
+  attr_reader :board
 end

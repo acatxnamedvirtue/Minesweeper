@@ -11,9 +11,11 @@ class Game
     board.add_bombs
 
     until board.over?
-      puts board.render
+      board.render
       make_move
     end
+
+    end_game
   end
 
   def make_move
@@ -44,6 +46,16 @@ class Game
     pos
   end
 
+  def end_game
+    board.render
+
+    if board.won?
+      puts "You won!"
+    else
+      puts "You lost!"
+    end
+  end
+
   def get_action
     action = nil
 
@@ -57,11 +69,12 @@ class Game
 
   def valid_pos?(pos)
     return false unless pos
+
     board.in_range?(pos)
   end
 
   def valid_action?(action)
-    [:f, :r].any? { |sym| sym == action }
+    [:f, :r].include?(action)
   end
 end
 

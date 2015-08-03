@@ -29,6 +29,17 @@ class Board
     grid
   end
 
+  def cols
+    grid.transpose
+  end
+
+  def in_range?(pos)
+    row_idx, col_idx = pos
+
+    row_idx.between?(0, rows.length - 1) &&
+      col_idx.between?(0, cols.length - 1)
+  end
+
   private
   attr_reader :grid
 end

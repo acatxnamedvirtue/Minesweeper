@@ -12,6 +12,7 @@ class Tile
 
   attr_reader :pos
   attr_writer :bomb, :flagged
+  attr_accessor :revealed
 
   def initialize(board, pos)
     @board = board
@@ -38,10 +39,6 @@ class Tile
 
   def revealed?
     revealed
-  end
-
-  def reveal
-    revealed = true
   end
 
   def neighbors

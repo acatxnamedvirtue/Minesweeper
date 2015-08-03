@@ -56,6 +56,10 @@ class Tile
     neighbors
   end
 
+  def neighbor_bomb_count
+    neighbors.select(&:bomb?).count
+  end
+
   private
   attr_reader :board, :pos, :bomb, :flagged
   attr_accessor :revealed

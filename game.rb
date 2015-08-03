@@ -21,34 +21,26 @@ class Game
     Game.new(height, width, num_bombs)
   end
 
+  def self.load_game
+    saved_game = File.read("saved_game.yml")
+
+    YAML.load(saved_game)
+  end
+
   def initialize(height, width, num_bombs)
     @board = Board.new(height, width, num_bombs)
+
+    board.populate
+    board.add_bombs
   end
 
   def run
-    board.populate
-    board.add_bombs
-
     until board.over?
       board.render
       make_move
     end
 
     end_game
-  end
-
-  def make_move
-    pos, action = nil, nil
-
-    #until valid_move?(pos, action)
-      pos = get_pos
-      action = get_action
-    #end
-
-    case action
-    when :f then board.flag_tile(pos)
-    when :r then board.reveal_tile(pos)
-    end
   end
 
   private
@@ -80,7 +72,7 @@ class Game
     action = nil
 
     until valid_action?(action)
-      puts "Please enter an action, e.g. toggle (F)lag, (R)eveal"
+      puts "Please enter an action, e.g. toggle (F)lag, (R)eveal, or (S)ave"
       action = gets.chomp[0].downcase.to_sym
     end
 
@@ -94,30 +86,57 @@ class Game
   end
 
   def valid_action?(action)
-    [:f, :r].include?(action)
+    [:f, :r, :s].include?(action)
+  end
+
+  def make_move
+    pos, action = nil, nil
+
+    #until valid_move?(pos, action)
+      pos = get_pos
+      action = get_action
+    #end
+
+    case action
+    when :f then board.flag_tile(pos)
+    when :r then board.reveal_tile(pos)
+    when :s then save_game
+    end
+  end
+
+  def save_game
+    File.open("saved_game.yml", "w") do |file|
+      file.puts self.to_yaml
+    end
   end
 end
 
 if __FILE__ == $PROGRAM_NAME
-  puts "Please enter a difficulty: (E)asy, (M)edium, (H)ard, (C)ustom."
-  difficulty = gets.chomp[0].downcase.to_sym
+  puts "Start a (N)ew game or (L)oad game?"
+  option = gets.chomp[0].downcase.to_sym
+  if option == :l
+    game = Game.load_game
+  else
+    puts "Please choose a difficulty: (E)asy, (M)edium, (H)ard, (C)ustom."
+    difficulty = gets.chomp[0].downcase.to_sym
 
-  if [:e, :m, :h].include?(difficulty)
-    game = Game.from_difficulty(difficulty)
-  elsif difficulty == :c
-    puts "Please enter a height: "
-    print ">"
-    height = gets.chomp.to_i
+    if [:e, :m, :h].include?(difficulty)
+      game = Game.from_difficulty(difficulty)
+    elsif difficulty == :c
+      puts "Please enter a height: "
+      print ">"
+      height = gets.chomp.to_i
 
-    puts "Please enter a width: "
-    print ">"
-    width = gets.chomp.to_i
+      puts "Please enter a width: "
+      print ">"
+      width = gets.chomp.to_i
 
-    puts "Please enter the number of bombs: "
-    print ">"
-    num_bombs = gets.chomp.to_i
+      puts "Please enter the number of bombs: "
+      print ">"
+      num_bombs = gets.chomp.to_i
 
-    game = Game.new(height, width, num_bombs)
+      game = Game.new(height, width, num_bombs)
+    end
   end
 
   game.run

@@ -1,4 +1,18 @@
+require 'colorize'
+
 class Tile
+  COLORS = {
+    1 => :light_green,
+    2 => :green,
+    3 => :blue,
+    4 => :cyan,
+    5 => :yellow,
+    6 => :light_magenta,
+    7 => :magenta,
+    8 => :light_red,
+    9 => :red
+  }
+
   NEIGHBOR_OFFSETS = [
     [-1, -1],
     [+0, -1],
@@ -27,6 +41,19 @@ class Tile
       bomb: @bomb,
       flagged: @flagged,
       revealed: @revealed }
+  end
+
+  def to_s
+    return "F" if flagged?
+    return "*" if !revealed?
+    return "B" if bomb?
+
+    case neighbor_bomb_count
+    when 0
+      "_"
+    else
+      neighbor_bomb_count.to_s.colorize(COLORS[neighbor_bomb_count])
+    end
   end
 
   def bomb?

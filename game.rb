@@ -7,13 +7,27 @@ class Game
   end
 
   def run
+    until board.over?
 
+    end
   end
 
-  def get_move
-    pos = get_pos
-    action = get_action
+  def make_move
+    pos, action = nil, nil
+
+    until valid_move?(pos, action)
+      pos = get_pos
+      action = get_action
+    end
+
+    case action
+    when :f then board.flag_tile(pos)
+    when :r then board.reveal_tile(pos)
+    end
   end
+
+  private
+  attr_reader :board
 
   def get_pos
     pos = nil
@@ -36,8 +50,6 @@ class Game
 
     action
   end
-
-  private
 
   def valid_pos?(pos)
     board.in_range?(pos)

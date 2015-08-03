@@ -27,9 +27,7 @@ class Board
   end
 
   def render
-    rows.map do |row|
-      row.map(&:to_s).join
-    end
+    rows.map { |row| row.map(&:to_s).join }
   end
 
   def add_bombs

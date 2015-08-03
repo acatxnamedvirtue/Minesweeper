@@ -2,7 +2,7 @@ require 'colorize'
 
 class Tile
   COLORS = {
-    1 => :red
+    1 => :red,
     2 => :green,
     3 => :yellow,
     4 => :blue,

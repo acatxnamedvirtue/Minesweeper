@@ -43,6 +43,19 @@ class Tile
     revealed = true
   end
 
+  def neighbors
+    p_x, p_y = pos
+    neighbors = []
+
+    NEIGHBOR_OFFSETS.each do |offset|
+      o_x, o_y = offset
+      neighbor_pos = o_x + p_x, o_y + p_y
+      neighbors << board[] if board.in_range?(neighbor_pos)
+    end
+
+    neighbors
+  end
+
   private
   attr_reader :board, :pos, :bomb, :flagged
   attr_accessor :revealed
